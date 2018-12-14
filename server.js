@@ -31,6 +31,12 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
+//handle routes not found
+app.use(function(req, res, next){
+  res.status(404);
+  res.type('txt').send('Not Found');
+})
+
 
 app.listen(port, function () {
   console.log('Node.js listening ...');
