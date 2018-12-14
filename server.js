@@ -6,6 +6,8 @@ var mongoose = require('mongoose');
 
 var cors = require('cors');
 
+var urlHandler = require('./controllers/urlHandler.js');
+
 var app = express();
 
 // Basic Configuration 
@@ -30,6 +32,10 @@ app.get('/', function(req, res){
 app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
+
+app.post("/api/shorturl/new", urlHandler.addUrl);
+
+app.get('/api/shorturl/:shurl', urlHandler.processShortUrl);
 
 //handle routes not found
 app.use(function(req, res, next){
