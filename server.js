@@ -14,8 +14,16 @@ var app = express();
 
 // Basic Configuration 
 var port = process.env.PORT || 3000;
+var mongoURL = process.env.MONGOLAB_URI;
 
-mongoose.connect(process.env.MONGOLAB_URI);
+mongoose.connect(mongoURL, function(err, db){
+  if (err) {
+  console.log('Unable to connect to the mongoDB server. Error:', err);
+} else {
+  console.log('Connection established to', mongoURL);
+  // do some work here with the database.=
+}
+}); 
 
 app.use(cors());
 app.use(bodyParser.urlencoded({'extended': false})); //mount body-parser to parse POST bodies
