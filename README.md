@@ -18,6 +18,6 @@ https://api-url-shortner.glitch.me/api/shorturl/3
 
 #### Will redirect to:
 
-http://forum.google.com
+http://www.google.com
 
 https://api-url-shortner.glitch.me/
