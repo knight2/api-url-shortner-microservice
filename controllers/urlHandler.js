@@ -48,8 +48,6 @@ exports.addUrl = function(req, res){
 
         //check dns of host
         dns.lookup(submittedUrl.match(urlProtocolExpession)[1], function(err, address){
-            console.log('inside dns');
-
             if (err){//invalid hostname
                 console.log('invalid' + ', address: ' + address + ' error: ' + err);
                 res.json({'error': 'invalid hostname'});
@@ -76,7 +74,6 @@ exports.addUrl = function(req, res){
 
                         //return data
                         newUrlEntry.save(function(err){
-                            console.log('inside save');
                             if(err) return;
                             res.json({"original_url": submittedUrl, "short_url": cnt});
                         });
@@ -89,5 +86,17 @@ exports.addUrl = function(req, res){
 };
 
 exports.processShortUrl = function(req, res){
-    res.json({processShortUrl: "Incomplete"});
+    var shurl = req.params.shurl;
+    if(!parseInt(shurl, 10)){ //check if is int number
+        res.json({'error': 'Wrong format'});
+        return;
+    }
+    UrlEntries.findOne({"index": shurl}, function(err, data){
+        if (err) return;
+        if (data){
+            res.redirect(data.url);
+        } else{
+            res.json({'error': 'no short url found for input'});
+        }
+    });
 };
